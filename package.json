@@ -1,0 +1,30 @@
+{
+  "name": "yeezy-dates",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vitest",
+    "test": "vitest run",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "lint": "tsc",
+    "ci": "pnpm run lint & pnpm run test & pnpm run build",
+    "release": "pnpm ci & changeset publish"
+  },
+  "keywords": [
+    "human",
+    "dates"
+  ],
+  "license": "MIT",
+  "author": "Sai Santhosh Pentakota",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.7",
+    "@types/node": "^20.8.6",
+    "tsup": "^8.2.1",
+    "typescript": "^5.2.2",
+    "vitest": "^2.0.3"
+  }
+}
