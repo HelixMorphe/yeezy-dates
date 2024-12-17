@@ -12,7 +12,8 @@
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "ci": "pnpm run lint & pnpm run test & pnpm run build",
-    "release": "pnpm ci & changeset publish"
+    "release": "pnpm ci & changeset publish",
+    "format": "prettier --write ./src"
   },
   "keywords": [
     "human",
@@ -22,7 +23,9 @@
   "author": "Sai Santhosh Pentakota",
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.0",
     "@types/node": "^20.8.6",
+    "prettier": "^3.4.2",
     "tsup": "^8.2.1",
     "typescript": "^5.2.2",
     "vitest": "^2.0.3"
