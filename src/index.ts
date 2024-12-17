@@ -1,8 +1,6 @@
 import { parseDate } from 'chrono-node';
 
-import {
-  getRelativeSuggestions,
-} from './engines/relative-time-engine/relative-time-engine';
+import { getRelativeSuggestions } from './engines/relative-time-engine/relative-time-engine';
 import { Suggestion } from './types';
 
 export function getSuggestions(input: string): Suggestion[] {

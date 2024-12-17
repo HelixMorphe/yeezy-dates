@@ -1,20 +1,8 @@
 import { parseDate } from 'chrono-node';
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  Mock,
-  vi,
-} from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
 import { getSuggestions } from './';
-import {
-  getRelativeSuggestions,
-} from './engines/relative-time-engine/relative-time-engine';
+import { getRelativeSuggestions } from './engines/relative-time-engine/relative-time-engine';
 
 vi.mock('chrono-node', () => ({
   parseDate: vi.fn().mockReturnValue('2021-01-01'),
@@ -78,5 +66,5 @@ describe('getSuggestions', () => {
     const result = getSuggestions(input);
 
     expect(result).toEqual([]);
-   })
+  });
 });
