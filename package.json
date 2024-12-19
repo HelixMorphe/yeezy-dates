@@ -24,7 +24,6 @@
   "author": "Sai Santhosh Pentakota",
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.0",
     "@types/node": "^20.8.6",
     "cz-conventional-changelog": "^3.3.0",
     "prettier": "^3.4.2",
