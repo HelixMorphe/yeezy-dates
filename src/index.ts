@@ -1,15 +1,16 @@
-import { Config, Suggestion } from './types';
+import { getRelativeSuggestions } from './engines/relative-time-engine/relative-time-engine';
+import { Suggestion } from './types';
+import { parseDate } from 'chrono-node';
 
-const defaultConfig: Config = {};
-
-export class SuggestionEngine {
-  private readonly config: Config;
-
-  constructor(config: Config = defaultConfig) {
-    this.config = config;
+export function getSuggestions(input: string): Suggestion[] {
+  const relativeTimeSuggestions = getRelativeSuggestions(input);
+  if (relativeTimeSuggestions.length === 0) {
+    const date = parseDate(input);
+    if (date === null) {
+      return [];
+    }
+    return [{ label: input, date: date }];
   }
 
-  getSuggestions(input: string): Suggestion[] {
-    throw new Error('Not implemented');
-  }
+  return relativeTimeSuggestions;
 }
