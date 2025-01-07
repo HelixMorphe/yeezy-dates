@@ -1,3 +1,4 @@
+import { getRelativeTimeSuggestions } from './parsers/relative-time-parser/relative-time-parser';
 import { Config, Suggestion } from './types';
 
 const defaultConfig: Config = {};
@@ -10,6 +11,8 @@ export class SuggestionEngine {
   }
 
   getSuggestions(input: string): Suggestion[] {
-    throw new Error('Not implemented');
+    const relativeTimeSuggestions = getRelativeTimeSuggestions(input);
+
+    return [...relativeTimeSuggestions];
   }
 }

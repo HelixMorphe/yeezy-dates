@@ -1,4 +1,11 @@
 import { SuggestionEngine } from '.';
+import { getRelativeTimeSuggestions } from './parsers/relative-time-parser/relative-time-parser';
+import { Suggestion } from './types';
+import { Mock } from 'vitest';
+
+vi.mock('./parsers/relative-time-parser/relative-time-parser', () => ({
+  getRelativeTimeSuggestions: vi.fn(),
+}));
 
 describe('SuggestionEngine', () => {
   describe('constructor', () => {
@@ -9,6 +16,8 @@ describe('SuggestionEngine', () => {
 
   describe('getSuggestions', () => {
     let suggestionEngine: SuggestionEngine;
+    let mockValuesFromParsers: Suggestion[] = [];
+
     beforeEach(() => {
       suggestionEngine = new SuggestionEngine();
     });
@@ -16,8 +25,14 @@ describe('SuggestionEngine', () => {
       vi.resetAllMocks();
     });
 
-    it('passes ci', () => {
-      expect(true).toBe(true);
+    it('returns suggestions from all parsers', () => {
+      (getRelativeTimeSuggestions as Mock).mockReturnValue(mockValuesFromParsers);
+      const input = '1 min';
+
+      const suggestions = suggestionEngine.getSuggestions(input);
+
+      expect(suggestions).toEqual(mockValuesFromParsers);
+      expect(getRelativeTimeSuggestions).toHaveBeenCalledWith(input);
     });
   });
 });
