@@ -8,7 +8,7 @@ import {
 const rules: Rule[] = [
   {
     type: RuleType.Enum,
-    values: ['now', 'today', 'tomorrow', 'yesterday'],
+    values: ['today', 'tomorrow', 'yesterday'],
   },
 ];
 

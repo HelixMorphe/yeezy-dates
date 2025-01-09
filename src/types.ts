@@ -1,5 +1,3 @@
-import { UncheckedSnapshot } from 'vitest';
-
 export type Suggestion = {
   label: string;
   date: Date;
@@ -14,7 +12,7 @@ export type CustomDate = {
 
 export type Template = {
   isMatching(input: string): boolean;
-  getMatchingValues(input: string): unknown;
+  getMatchingValues(input: string): string[];
 };
 
 export type Rule = {

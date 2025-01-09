@@ -1,7 +1,10 @@
-import { SuggestionEngine } from '.';
-import { getRelativeTimeSuggestions } from './parsers/relative-time-parser/relative-time-parser';
-import { Suggestion } from './types';
 import { Mock } from 'vitest';
+
+import { SuggestionEngine } from './';
+import {
+  getRelativeTimeSuggestions,
+} from './parsers/relative-time-parser/relative-time-parser';
+import { Suggestion } from './types';
 
 vi.mock('./parsers/relative-time-parser/relative-time-parser', () => ({
   getRelativeTimeSuggestions: vi.fn(),
