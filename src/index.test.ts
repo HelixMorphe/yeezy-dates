@@ -1,3 +1,4 @@
+import { parseDate } from 'chrono-node';
 import { Mock } from 'vitest';
 
 import { SuggestionEngine } from './';
@@ -10,16 +11,14 @@ vi.mock('./parsers/relative-time-parser/relative-time-parser', () => ({
   getRelativeTimeSuggestions: vi.fn(),
 }));
 
-describe('SuggestionEngine', () => {
-  describe('constructor', () => {
-    it('passes ci', () => {
-      expect(true).toBe(true);
-    });
-  });
+vi.mock('chrono-node', () => ({
+  parseDate: vi.fn(),
+}));
 
+describe('SuggestionEngine', () => {
   describe('getSuggestions', () => {
     let suggestionEngine: SuggestionEngine;
-    let mockValuesFromParsers: Suggestion[] = [];
+    let mockValuesFromParsers: Suggestion[] = [{ label: 'today', date: new Date('2021-01-01') }];
 
     beforeEach(() => {
       suggestionEngine = new SuggestionEngine();
@@ -36,6 +35,18 @@ describe('SuggestionEngine', () => {
 
       expect(suggestions).toEqual(mockValuesFromParsers);
       expect(getRelativeTimeSuggestions).toHaveBeenCalledWith(input);
+    });
+
+    it('falls back to chrono node if no parsers match', () => {
+      const input = '1 min ago';
+      const mockDate = new Date('2021-01-01');
+      (getRelativeTimeSuggestions as Mock).mockReturnValue([]);
+      (parseDate as Mock).mockReturnValue(mockDate);
+
+      const suggestions = suggestionEngine.getSuggestions(input);
+
+      expect(suggestions).toEqual([{ label: input, date: mockDate }]);
+      expect(parseDate).toHaveBeenCalledWith(input);
     });
   });
 });

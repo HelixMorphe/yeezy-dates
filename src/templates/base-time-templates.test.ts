@@ -2,7 +2,7 @@ import { BaseTimeTemplates } from './base-time-templates';
 
 describe('BaseTimeTemplate', () => {
   describe('isMatching', () => {
-    it.each(['t', 'to', 'tod', 'tom', 'y', 'yes', 't', 'n', 'no'])(
+    it.each(['t', 'to', 'tod', 'tom', 'y', 'yes'])(
       'returns true for substrings of %s',
       (input: string) => {
         const result = BaseTimeTemplates.isMatching(input);

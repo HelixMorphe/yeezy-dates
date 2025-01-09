@@ -20,10 +20,6 @@ describe('e2e', () => {
 
     expect(suggestions).toEqual([
       {
-        label: 'now',
-        date: chrono.parseDate('now'),
-      },
-      {
         label: 'today',
         date: chrono.parseDate('today'),
       },
@@ -34,6 +30,18 @@ describe('e2e', () => {
       {
         label: 'yesterday',
         date: chrono.parseDate('yesterday'),
+      },
+    ]);
+  });
+
+  it('returns suggestion if template is unknown and the input is a valid date', () => { 
+    const input = '5pm tomorrow';
+    const suggestions = suggestionEngine.getSuggestions(input);
+
+    expect(suggestions).toEqual([
+      {
+        label: input,
+        date: chrono.parseDate(input),
       },
     ]);
   });
