@@ -12,7 +12,8 @@ import { Suggestion } from './types';
 const templateSuggestionService = createDefaultSuggestionService();
 
 function getSuggestions(input: string): Suggestion[] {
-  return templateSuggestionService.getSuggestions(input);
+  const trimmedInput = input.trim();
+  return templateSuggestionService.getSuggestions(trimmedInput);
 }
 
 export { getSuggestions };
