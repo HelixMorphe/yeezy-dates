@@ -13,6 +13,7 @@ export interface Pattern {
 export interface Template {
   readonly parts: string[];
   readonly patterns: Pattern[];
+  readonly supportsEmptyInput?: boolean;
   format(values: string[]): string;
 }
 export interface SuggestionService {
