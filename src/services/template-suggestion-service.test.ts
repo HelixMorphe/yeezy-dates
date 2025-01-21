@@ -15,26 +15,25 @@ describe('TemplateSuggestionService', () => {
   let generationService: SuggestionGenerationService;
   let filterService: SuggestionFilterService;
   let suggestionService: TemplateSuggestionService;
-  
+
   beforeEach(() => {
     vi.resetAllMocks();
     vi.useFakeTimers().setSystemTime(new Date(0));
-    
+
     repository = new TemplateRepository();
     generationService = new SuggestionGenerationService();
     filterService = new SuggestionFilterService();
-    
-    DateParsingService.parse = vi.fn().mockImplementation((suggestion: string) => ({label: suggestion, date: new Date()}));
+
+    DateParsingService.parse = vi
+      .fn()
+      .mockImplementation((suggestion: string) => ({ label: suggestion, date: new Date() }));
 
     suggestionService = new TemplateSuggestionService(repository, generationService, filterService);
-
   });
 
   it('should get suggestions and apply filtering and limiting', () => {
-    const templates: Template[] = [
-      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
-    ];
-    
+    const templates: Template[] = [{ parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') }];
+
     repository.getAll = vi.fn().mockReturnValue(templates);
     generationService.generate = vi.fn().mockReturnValue(['template1', 'template2']);
     filterService.filter = vi.fn().mockReturnValue(['template1', 'template2']);
@@ -79,7 +78,7 @@ describe('TemplateSuggestionService', () => {
     const templates: Template[] = [
       { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('formattedTemplate1') },
     ];
-    
+
     repository.getAll = vi.fn().mockReturnValue(templates);
     generationService.generate = vi.fn().mockReturnValue(['formattedTemplate1']);
     filterService.filter = vi.fn().mockReturnValue(['formattedTemplate1']);
@@ -90,9 +89,7 @@ describe('TemplateSuggestionService', () => {
   });
 
   it('should return an empty array if no matching suggestions are found', () => {
-    const templates: Template[] = [
-      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
-    ];
+    const templates: Template[] = [{ parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') }];
 
     repository.getAll = vi.fn().mockReturnValue(templates);
     generationService.generate = vi.fn().mockReturnValue(['template1']);
@@ -104,26 +101,21 @@ describe('TemplateSuggestionService', () => {
     expect(suggestions).toHaveLength(0);
   });
 
-  it('falls back to date parsing service when no suggestions are found from templates', () => { 
-    const templates: Template[] = [
-      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
-    ];
+  it('falls back to date parsing service when no suggestions are found from templates', () => {
+    const templates: Template[] = [{ parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') }];
 
     repository.getAll = vi.fn().mockReturnValue(templates);
     generationService.generate = vi.fn().mockReturnValue([]);
     filterService.filter = vi.fn().mockReturnValue([]);
 
-
     const suggestions = suggestionService.getSuggestions('nonmatching', 5);
 
-    expect(suggestions).toEqual([{label: 'nonmatching', date: new Date()}]);
+    expect(suggestions).toEqual([{ label: 'nonmatching', date: new Date() }]);
     expect(DateParsingService.parse).toHaveBeenCalledWith('nonmatching');
   });
 
-  it('returns empty array if no suggestions are found from templates and date parsing service', () => { 
-    const templates: Template[] = [
-      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
-    ];
+  it('returns empty array if no suggestions are found from templates and date parsing service', () => {
+    const templates: Template[] = [{ parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') }];
 
     repository.getAll = vi.fn().mockReturnValue(templates);
     generationService.generate = vi.fn().mockReturnValue([]);
@@ -134,5 +126,21 @@ describe('TemplateSuggestionService', () => {
 
     expect(suggestions).toEqual([]);
     expect(DateParsingService.parse).toHaveBeenCalledWith('nonmatching');
-  })
+  });
+
+  it('only considers templates with supportsEmptyInput flag set to true when input is empty', () => {
+    const input = '';
+    const templates: Template[] = [
+      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1'), supportsEmptyInput: true },
+      { parts: ['part2'], patterns: [], format: vi.fn().mockReturnValue('template2') },
+    ];
+    repository.getAll = vi.fn().mockReturnValue(templates);
+    generationService.generate = vi.fn().mockReturnValue(['template1']);
+    filterService.filter = vi.fn().mockReturnValue(['template1']);
+
+    suggestionService.getSuggestions(input, 5);
+
+    expect(generationService.generate).toHaveBeenCalledWith(templates[0], expect.any(Number));
+    expect(generationService.generate).not.toHaveBeenCalledWith(templates[1], expect.any(Number));
+  });
 });

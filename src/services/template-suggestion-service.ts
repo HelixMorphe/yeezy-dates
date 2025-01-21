@@ -17,8 +17,9 @@ export class TemplateSuggestionService implements SuggestionService {
 
   getSuggestions(input: string, limit: number = 5): Suggestion[] {
     const templates = this.repository.getAll();
+    const applicableTemplates = !input ? templates.filter((template) => template.supportsEmptyInput) : templates;
 
-    const suggestionsFromTemplates = this.getSuggestionsFromTemplates(templates, input, limit);
+    const suggestionsFromTemplates = this.getSuggestionsFromTemplates(applicableTemplates, input, limit);
 
     const filteredSuggestions = this.filterService.filter(suggestionsFromTemplates, input).slice(0, limit);
     if (filteredSuggestions.length === 0) {
