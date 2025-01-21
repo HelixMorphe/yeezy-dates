@@ -17,9 +17,18 @@ export class TemplateSuggestionService implements SuggestionService {
 
   getSuggestions(input: string, limit: number = 5): Suggestion[] {
     const templates = this.repository.getAll();
-    
+
     const suggestionsFromTemplates = this.getSuggestionsFromTemplates(templates, input, limit);
+
     const filteredSuggestions = this.filterService.filter(suggestionsFromTemplates, input).slice(0, limit);
+    if (filteredSuggestions.length === 0) {
+      const parsedDate = DateParsingService.parse(input);
+      if (!parsedDate) {
+        return [];
+      }
+
+      return [parsedDate];
+    }
 
     return this.getParsedSuggestions(filteredSuggestions);
   }
