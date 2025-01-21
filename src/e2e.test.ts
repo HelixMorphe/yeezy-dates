@@ -6,10 +6,16 @@ describe('E2E', () => {
     vi.useFakeTimers().setSystemTime(new Date(0));
   });
 
-  it('returns empty array for empty input', () => {
+  it('returns relative day suggestions for an empty input', () => {
     const suggestions = getSuggestions('');
 
-    expect(suggestions).toEqual([]);
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: 'yesterday', date: expect.any(Date) },
+        { label: 'today', date: expect.any(Date) },
+        { label: 'tomorrow', date: expect.any(Date) },
+      ]),
+    );
   });
 
   it('returns suggestions for relative time input', () => {
