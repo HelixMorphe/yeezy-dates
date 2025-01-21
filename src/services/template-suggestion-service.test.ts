@@ -1,5 +1,6 @@
 import { TemplateRepository } from '../repositories/template-repository';
 import { Template } from '../types';
+import { DateParsingService } from './date-parsing-service';
 import { SuggestionFilterService } from './suggestion-filter-service';
 import { SuggestionGenerationService } from './suggestion-generation-service';
 import { TemplateSuggestionService } from './template-suggestion-service';
@@ -7,19 +8,26 @@ import { TemplateSuggestionService } from './template-suggestion-service';
 vi.mock('../repositories/template-repository');
 vi.mock('./suggestion-generation-service');
 vi.mock('./suggestion-filter-service');
+vi.mock('./date-parsing-service');
 
 describe('TemplateSuggestionService', () => {
   let repository: TemplateRepository;
   let generationService: SuggestionGenerationService;
   let filterService: SuggestionFilterService;
   let suggestionService: TemplateSuggestionService;
-
+  
   beforeEach(() => {
+    vi.resetAllMocks();
+    vi.useFakeTimers().setSystemTime(new Date(0));
+    
     repository = new TemplateRepository();
     generationService = new SuggestionGenerationService();
     filterService = new SuggestionFilterService();
+    
+    DateParsingService.parse = vi.fn().mockImplementation((suggestion: string) => ({label: suggestion, date: new Date()}));
 
     suggestionService = new TemplateSuggestionService(repository, generationService, filterService);
+
   });
 
   it('should get suggestions and apply filtering and limiting', () => {
@@ -43,6 +51,7 @@ describe('TemplateSuggestionService', () => {
 
     expect(filterService.filter).toHaveBeenCalledWith(['template1', 'template2'], input);
 
+    expect(DateParsingService.parse).toHaveBeenCalled();
     expect(suggestions).toHaveLength(2);
     expect(suggestions[0]).toHaveProperty('label', 'template1');
     expect(suggestions[1]).toHaveProperty('label', 'template2');
