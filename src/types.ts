@@ -5,7 +5,7 @@ export type Suggestion = {
 
 type PatternValue = string | number;
 
-interface Pattern {
+export interface Pattern {
   readonly key: string;
   readonly values: PatternValue[];
 }
@@ -18,10 +18,6 @@ export interface Template {
 
 interface SuggestionFilter {
   filter(suggestions: string[], input: string): string[];
-}
-
-interface SuggestionGenerator {
-  generate(template: Template, limit: number): string[];
 }
 
 export interface SuggestionService {
