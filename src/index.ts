@@ -24,6 +24,7 @@ function createDefaultSuggestionService(): TemplateSuggestionService {
 
   repository.add('relative-time-template', TemplateFactory.createRelativeTimeTemplate());
   repository.add('relative-weekday-template', TemplateFactory.createRelativeWeekdayTemplate())
+  repository.add('relative-day-template', TemplateFactory.createRelativeDayTemplate());
 
   return new TemplateSuggestionService(repository, generationService, filterService);
 }

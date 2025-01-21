@@ -1,4 +1,5 @@
 import { TIME_UNITS } from '../constants';
+import { RelativeDayTemplate } from './relative-day-template';
 import { RelativeTimeTemplate } from './relative-time-template';
 import { RelativeWeekdayTemplate } from './relative-weekday-template';
 import { SimplePattern } from './simple-pattern';
@@ -14,7 +15,13 @@ vi.mock('./relative-weekday-template', () => ({
   RelativeWeekdayTemplate: vi.fn().mockReturnValue({
     format: vi.fn().mockReturnValue(''),
   }),
-}))
+}));
+
+vi.mock('./relative-day-template', () => ({
+  RelativeDayTemplate: vi.fn().mockReturnValue({
+    format: vi.fn().mockReturnValue(''),
+  }),
+}));
 
 describe('TemplateFactory', () => {
   it('returns relativeTimeTemplate', () => {
@@ -48,6 +55,21 @@ describe('TemplateFactory', () => {
           values: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
         },
       ],
+    );
+  });
+
+  it('returns relativeDayTemplate', () => {
+    TemplateFactory.createRelativeDayTemplate();
+
+    expect(RelativeDayTemplate).toHaveBeenCalledWith(
+      ['relativeDay'],
+      [
+        {
+          key: 'relativeDay',
+          values: ['yesterday', 'today', 'tomorrow'],
+        },
+      ],
+      true,
     );
   });
 });
