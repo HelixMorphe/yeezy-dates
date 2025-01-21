@@ -19,9 +19,10 @@ export class TemplateSuggestionService implements SuggestionService {
     const templates = this.repository.getAll();
     const applicableTemplates = !input ? templates.filter((template) => template.supportsEmptyInput) : templates;
 
-    const suggestionsFromTemplates = this.getSuggestionsFromTemplates(applicableTemplates, input, limit);
+    const suggestionsFromTemplates = this.getSuggestionsFromTemplates(applicableTemplates, input);
 
     const filteredSuggestions = this.filterService.filter(suggestionsFromTemplates, input).slice(0, limit);
+
     if (filteredSuggestions.length === 0) {
       const parsedDate = DateParsingService.parse(input);
       if (!parsedDate) {
@@ -34,14 +35,12 @@ export class TemplateSuggestionService implements SuggestionService {
     return this.getParsedSuggestions(filteredSuggestions);
   }
 
-  private getSuggestionsFromTemplates(templates: Template[], input: string, limit: number): string[] {
+  private getSuggestionsFromTemplates(templates: Template[], input: string): string[] {
     const suggestions: string[] = [];
 
     for (const template of templates) {
       const templateSuggestions = this.generationService.generate(template, Infinity);
       suggestions.push(...templateSuggestions);
-
-      if (suggestions.length >= limit) break;
     }
 
     return suggestions;

@@ -1,6 +1,7 @@
 import { TIME_UNITS } from '../constants';
 import { Template } from '../types';
 import { RelativeTimeTemplate } from './relative-time-template';
+import { RelativeWeekdayTemplate } from './relative-weekday-template';
 import { SimplePattern } from './simple-pattern';
 
 export class TemplateFactory {
@@ -16,5 +17,18 @@ export class TemplateFactory {
         new SimplePattern('direction', ['from now', 'ago']),
       ],
     );
+  }
+
+  static createRelativeWeekdayTemplate(): Template { 
+    return new RelativeWeekdayTemplate(['relative', 'weekday'], [
+      {
+        key: 'relative',
+        values: ['this', 'next', 'last'],
+      },
+      {
+        key: 'weekday',
+        values: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+      }
+    ])
   }
 }
