@@ -3,7 +3,7 @@ export type Suggestion = {
   date: Date;
 };
 
-type PatternValue = string | number;
+export type PatternValue = string | number;
 
 export interface Pattern {
   readonly key: string;
