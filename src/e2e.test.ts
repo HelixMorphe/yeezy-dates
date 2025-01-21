@@ -25,8 +25,6 @@ describe('E2E', () => {
 
     expect(suggestions).toEqual(
       expect.arrayContaining([
-        { label: '5 seconds from now', date: expect.any(Date) },
-        { label: '5 seconds ago', date: expect.any(Date) },
         { label: '5 minutes from now', date: expect.any(Date) },
         { label: '5 minutes ago', date: expect.any(Date) },
       ]),

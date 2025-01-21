@@ -38,4 +38,13 @@ describe('getSuggestions', () => {
 
     expect(suggestions).toEqual([]);
   });
+
+  it('trims whitespace from input', () => { 
+    const input = ' 5 minutes ago ';
+    const trimmedInput = '5 minutes ago';
+
+    getSuggestions(input);
+
+    expect(mockTemplateEngine.getSuggestions).toHaveBeenCalledWith(trimmedInput);
+  });
 });

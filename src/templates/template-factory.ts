@@ -1,4 +1,8 @@
-import { TIME_UNITS } from '../constants';
+import {
+  RELATIVE_DAYS,
+  TIME_UNITS,
+  WEEKDAYS,
+} from '../constants';
 import { Template } from '../types';
 import { RelativeDayTemplate } from './relative-day-template';
 import { RelativeTimeTemplate } from './relative-time-template';
@@ -30,7 +34,7 @@ export class TemplateFactory {
         },
         {
           key: 'weekday',
-          values: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+          values: WEEKDAYS,
         },
       ],
     );
@@ -42,7 +46,7 @@ export class TemplateFactory {
       [
         {
           key: 'relativeDay',
-          values: ['yesterday', 'today', 'tomorrow'],
+          values: RELATIVE_DAYS,
         },
       ],
       true,
