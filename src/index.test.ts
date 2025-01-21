@@ -12,7 +12,7 @@ vi.mock('./services/template-suggestion-service', () => ({
 }));
 
 describe('getSuggestions', () => {
-  const mockTemplateEngine = new TemplateSuggestionService();
+  const mockTemplateEngine = new TemplateSuggestionService({} as any, {} as any, {} as any);
 
   beforeEach(() => {
     vi.clearAllMocks();

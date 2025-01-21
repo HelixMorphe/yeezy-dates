@@ -16,5 +16,5 @@ export interface Template {
   format(values: string[]): string;
 }
 export interface SuggestionService {
-  getSuggestions(input: string, templateNames?: string[], limit?: number): Suggestion[];
+  getSuggestions(input: string, limit?: number): Suggestion[];
 }
