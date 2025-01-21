@@ -57,15 +57,6 @@ describe('TemplateSuggestionService', () => {
     expect(suggestions[1]).toHaveProperty('label', 'template2');
   });
 
-  it('should handle empty repository gracefully', () => {
-    repository.getAll = vi.fn().mockReturnValue([]);
-    filterService.filter = vi.fn().mockReturnValue([]);
-
-    const suggestions = suggestionService.getSuggestions('temp', 5);
-
-    expect(suggestions).toHaveLength(0);
-  });
-
   it('should apply limit correctly', () => {
     const templates: Template[] = [
       { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
@@ -106,9 +97,42 @@ describe('TemplateSuggestionService', () => {
     repository.getAll = vi.fn().mockReturnValue(templates);
     generationService.generate = vi.fn().mockReturnValue(['template1']);
     filterService.filter = vi.fn().mockReturnValue([]);
+    DateParsingService.parse = vi.fn().mockReturnValue(null);
 
     const suggestions = suggestionService.getSuggestions('nonmatching', 5);
 
     expect(suggestions).toHaveLength(0);
   });
+
+  it('falls back to date parsing service when no suggestions are found from templates', () => { 
+    const templates: Template[] = [
+      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
+    ];
+
+    repository.getAll = vi.fn().mockReturnValue(templates);
+    generationService.generate = vi.fn().mockReturnValue([]);
+    filterService.filter = vi.fn().mockReturnValue([]);
+
+
+    const suggestions = suggestionService.getSuggestions('nonmatching', 5);
+
+    expect(suggestions).toEqual([{label: 'nonmatching', date: new Date()}]);
+    expect(DateParsingService.parse).toHaveBeenCalledWith('nonmatching');
+  });
+
+  it('returns empty array if no suggestions are found from templates and date parsing service', () => { 
+    const templates: Template[] = [
+      { parts: ['part1'], patterns: [], format: vi.fn().mockReturnValue('template1') },
+    ];
+
+    repository.getAll = vi.fn().mockReturnValue(templates);
+    generationService.generate = vi.fn().mockReturnValue([]);
+    filterService.filter = vi.fn().mockReturnValue([]);
+    DateParsingService.parse = vi.fn().mockReturnValue(null);
+
+    const suggestions = suggestionService.getSuggestions('nonmatching', 5);
+
+    expect(suggestions).toEqual([]);
+    expect(DateParsingService.parse).toHaveBeenCalledWith('nonmatching');
+  })
 });
