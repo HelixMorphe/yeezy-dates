@@ -26,4 +26,19 @@ describe('E2E', () => {
       ]),
     );
   });
+
+  it('returns suggestions for relative weekday input', () => {
+    const input = 'next';
+
+    const suggestions = getSuggestions(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: 'next monday', date: expect.any(Date) },
+        { label: 'next tuesday', date: expect.any(Date) },
+        { label: 'next wednesday', date: expect.any(Date) },
+        { label: 'next thursday', date: expect.any(Date) },
+      ]),
+    );
+  });
 });

@@ -23,6 +23,7 @@ function createDefaultSuggestionService(): TemplateSuggestionService {
   const filterService = new SuggestionFilterService();
 
   repository.add('relative-time-template', TemplateFactory.createRelativeTimeTemplate());
+  repository.add('relative-weekday-template', TemplateFactory.createRelativeWeekdayTemplate())
 
   return new TemplateSuggestionService(repository, generationService, filterService);
 }
