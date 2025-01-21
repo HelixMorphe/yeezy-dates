@@ -15,11 +15,6 @@ export interface Template {
   readonly patterns: Pattern[];
   format(values: string[]): string;
 }
-
-interface SuggestionFilter {
-  filter(suggestions: string[], input: string): string[];
-}
-
 export interface SuggestionService {
   getSuggestions(input: string, templateNames?: string[], limit?: number): Suggestion[];
 }
