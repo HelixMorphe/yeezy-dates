@@ -45,4 +45,31 @@ describe('E2E', () => {
       ]),
     );
   });
+
+  it('returns suggestions for relative day with time input', () => {
+    const input = 'tomorrow at';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        {
+          label: 'tomorrow at noon',
+          date: expect.any(Date),
+        },
+        {
+          label: 'tomorrow at midnight',
+          date: expect.any(Date),
+        },
+        {
+          label: 'tomorrow at 8am',
+          date: expect.any(Date),
+        },
+        {
+          label: 'tomorrow at 9am',
+          date: expect.any(Date),
+        },
+      ]),
+    );
+  });
 });

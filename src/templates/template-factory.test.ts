@@ -1,5 +1,11 @@
-import { TIME_UNITS } from '../constants';
+import {
+  GENERAL_TIME_UNITS,
+  RELATIVE_DAYS,
+  TIME_OF_DAY,
+  TIME_UNITS,
+} from '../constants';
 import { RelativeDayTemplate } from './relative-day-template';
+import { RelativeDayWithTimeTemplate } from './relative-day-with-time-template';
 import { RelativeTimeTemplate } from './relative-time-template';
 import { RelativeWeekdayTemplate } from './relative-weekday-template';
 import { SimplePattern } from './simple-pattern';
@@ -19,6 +25,12 @@ vi.mock('./relative-weekday-template', () => ({
 
 vi.mock('./relative-day-template', () => ({
   RelativeDayTemplate: vi.fn().mockReturnValue({
+    format: vi.fn().mockReturnValue(''),
+  }),
+}));
+
+vi.mock('./relative-day-with-time-template', () => ({
+  RelativeDayWithTimeTemplate: vi.fn().mockReturnValue({
     format: vi.fn().mockReturnValue(''),
   }),
 }));
@@ -70,6 +82,18 @@ describe('TemplateFactory', () => {
         },
       ],
       true,
+    );
+  });
+
+  it('returns relativeDayWithTimeTemplate', () => { 
+    TemplateFactory.createRelativeDayWithTimeTemplate();
+
+    expect(RelativeDayWithTimeTemplate).toHaveBeenCalledWith(
+      ['relativeDay', 'time'],
+      [
+        { key: 'relativeDay', values: RELATIVE_DAYS },
+        { key: 'time', values: [...GENERAL_TIME_UNITS,...TIME_OF_DAY] },
+      ],
     );
   });
 });
