@@ -1,6 +1,6 @@
 {
   "name": "yeezy-dates",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "./dist/index.js",
@@ -13,11 +13,11 @@
     "lint": "tsc",
     "ci": "pnpm run lint & pnpm run test & pnpm run build",
     "commit": "cz",
-    "release": "pnpm ci & changeset publish",
+    "release": "pnpm install --frozen-lockfile && pnpm run lint && pnpm run test && pnpm run build && changeset publish",
     "format": "prettier --write ./src"
   },
   "keywords": [
-    "human",
+    "yeezy",
     "dates"
   ],
   "license": "MIT",
