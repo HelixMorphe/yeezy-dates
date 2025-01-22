@@ -11,12 +11,12 @@ import { Suggestion } from './types';
 
 const templateSuggestionService = createDefaultSuggestionService();
 
-function getSuggestions(input: string): Suggestion[] {
+function parseDate(input: string): Suggestion[] {
   const trimmedInput = input.trim();
   return templateSuggestionService.getSuggestions(trimmedInput);
 }
 
-export { getSuggestions };
+export { parseDate };
 
 function createDefaultSuggestionService(): TemplateSuggestionService {
   const repository = new TemplateRepository();

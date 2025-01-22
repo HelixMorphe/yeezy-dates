@@ -1,6 +1,6 @@
 import { Mock } from 'vitest';
 
-import { getSuggestions } from './index';
+import { parseDate } from './index';
 import {
   TemplateSuggestionService,
 } from './services/template-suggestion-service';
@@ -11,7 +11,7 @@ vi.mock('./services/template-suggestion-service', () => ({
   }),
 }));
 
-describe('getSuggestions', () => {
+describe('parseDate', () => {
   const mockTemplateEngine = new TemplateSuggestionService({} as any, {} as any, {} as any);
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('getSuggestions', () => {
     (mockTemplateEngine.getSuggestions as Mock).mockReturnValue(mockSuggestions);
     const input = '1';
 
-    const suggestions = getSuggestions(input);
+    const suggestions = parseDate(input);
 
     expect(mockTemplateEngine.getSuggestions).toHaveBeenCalledWith(input);
     expect(suggestions).toEqual(mockSuggestions);
@@ -34,7 +34,7 @@ describe('getSuggestions', () => {
     (mockTemplateEngine.getSuggestions as Mock).mockReturnValue([]);
     const input = '5 minutes ago';
 
-    const suggestions = getSuggestions(input);
+    const suggestions = parseDate(input);
 
     expect(suggestions).toEqual([]);
   });
@@ -43,7 +43,7 @@ describe('getSuggestions', () => {
     const input = ' 5 minutes ago ';
     const trimmedInput = '5 minutes ago';
 
-    getSuggestions(input);
+    parseDate(input);
 
     expect(mockTemplateEngine.getSuggestions).toHaveBeenCalledWith(trimmedInput);
   });

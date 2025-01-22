@@ -1,4 +1,4 @@
-import { getSuggestions } from './';
+import { parseDate } from './';
 
 describe('E2E', () => {
   beforeEach(() => {
@@ -7,7 +7,7 @@ describe('E2E', () => {
   });
 
   it('returns relative day suggestions for an empty input', () => {
-    const suggestions = getSuggestions('');
+    const suggestions = parseDate('');
 
     expect(suggestions).toEqual(
       expect.arrayContaining([
@@ -21,7 +21,7 @@ describe('E2E', () => {
   it('returns suggestions for relative time input', () => {
     const inputs = '5';
 
-    const suggestions = getSuggestions(inputs);
+    const suggestions = parseDate(inputs);
 
     expect(suggestions).toEqual(
       expect.arrayContaining([
@@ -34,7 +34,7 @@ describe('E2E', () => {
   it('returns suggestions for relative weekday input', () => {
     const input = 'next';
 
-    const suggestions = getSuggestions(input);
+    const suggestions = parseDate(input);
 
     expect(suggestions).toEqual(
       expect.arrayContaining([
