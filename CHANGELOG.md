@@ -1,5 +1,11 @@
 # natural-date-parser
 
+## 1.0.1
+
+### Patch Changes
+
+- a442d22: fix: Add `exports` key to `package.json`.
+
 ## 0.0.5
 
 ### Patch Changes
