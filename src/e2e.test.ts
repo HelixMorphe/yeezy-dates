@@ -100,4 +100,52 @@ describe('E2E', () => {
       ]),
     );
   });
+
+  it('returns suggestions for relative week input', () => {
+    const input = 'this week';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: 'this week', date: expect.any(Date) },
+      ]),
+    );
+  });
+
+  it('returns suggestions for relative month input', () => {
+    const input = 'next month';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: 'next month', date: expect.any(Date) },
+      ]),
+    );
+  });
+
+  it('returns suggestions for relative year input', () => {
+    const input = 'last year';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: 'last year', date: expect.any(Date) },
+      ]),
+    );
+  });
+
+  it('returns suggestions for relative weekend input', () => {
+    const input = 'this sat';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: 'this saturday', date: expect.any(Date) },
+      ]),
+    );
+  });
 });
