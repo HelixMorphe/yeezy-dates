@@ -72,4 +72,32 @@ describe('E2E', () => {
       ]),
     );
   });
+
+  it('returns suggestions for any number input (dynamic number support)', () => {
+    const input = '100';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: '100 minutes from now', date: expect.any(Date) },
+        { label: '100 minutes ago', date: expect.any(Date) },
+        { label: '100 hours from now', date: expect.any(Date) },
+        { label: '100 hours ago', date: expect.any(Date) },
+      ]),
+    );
+  });
+
+  it('returns suggestions for large numbers', () => {
+    const input = '365 days';
+
+    const suggestions = parseDate(input);
+
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        { label: '365 days from now', date: expect.any(Date) },
+        { label: '365 days ago', date: expect.any(Date) },
+      ]),
+    );
+  });
 });

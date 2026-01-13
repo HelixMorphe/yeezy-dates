@@ -8,6 +8,7 @@ export type PatternValue = string | number;
 export interface Pattern {
   readonly key: string;
   readonly values: PatternValue[];
+  getValuesForInput?(input: string): PatternValue[];
 }
 
 export interface Template {

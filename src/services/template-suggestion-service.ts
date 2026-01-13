@@ -39,7 +39,7 @@ export class TemplateSuggestionService implements SuggestionService {
     const suggestions: string[] = [];
 
     for (const template of templates) {
-      const templateSuggestions = this.generationService.generate(template, Infinity);
+      const templateSuggestions = this.generationService.generate(template, Infinity, input);
       suggestions.push(...templateSuggestions);
     }
 
