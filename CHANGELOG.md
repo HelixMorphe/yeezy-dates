@@ -1,5 +1,16 @@
 # natural-date-parser
 
+## 1.1.0
+
+### Minor Changes
+
+- 0d1fe9c: Add new relative date templates for enhanced date suggestions:
+
+  - Relative month suggestions (e.g., "next month", "2 months ago")
+  - Relative week suggestions (e.g., "next week", "last week")
+  - Relative weekend suggestions (e.g., "this weekend", "next weekend")
+  - Relative year suggestions (e.g., "next year", "last year")
+
 ## 1.0.1
 
 ### Patch Changes
