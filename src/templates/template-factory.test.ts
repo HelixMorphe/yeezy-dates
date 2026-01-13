@@ -4,6 +4,7 @@ import {
   TIME_OF_DAY,
   TIME_UNITS,
 } from '../constants';
+import { DynamicNumberPattern } from './dynamic-number-pattern';
 import { RelativeDayTemplate } from './relative-day-template';
 import { RelativeDayWithTimeTemplate } from './relative-day-with-time-template';
 import { RelativeTimeTemplate } from './relative-time-template';
@@ -42,10 +43,7 @@ describe('TemplateFactory', () => {
     expect(RelativeTimeTemplate).toHaveBeenCalledWith(
       ['{number}', '{unit}', '{direction}'],
       [
-        new SimplePattern(
-          'number',
-          Array.from({ length: 60 }, (_, i) => i + 1),
-        ),
+        new DynamicNumberPattern(),
         new SimplePattern('unit', TIME_UNITS),
         new SimplePattern('direction', ['from now', 'ago']),
       ],

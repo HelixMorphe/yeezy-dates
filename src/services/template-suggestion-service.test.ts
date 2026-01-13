@@ -45,7 +45,7 @@ describe('TemplateSuggestionService', () => {
     expect(repository.getAll).toHaveBeenCalled();
 
     templates.forEach((template) => {
-      expect(generationService.generate).toHaveBeenCalledWith(template, Infinity);
+      expect(generationService.generate).toHaveBeenCalledWith(template, Infinity, input);
     });
 
     expect(filterService.filter).toHaveBeenCalledWith(['template1', 'template2'], input);
@@ -140,7 +140,7 @@ describe('TemplateSuggestionService', () => {
 
     suggestionService.getSuggestions(input, 5);
 
-    expect(generationService.generate).toHaveBeenCalledWith(templates[0], expect.any(Number));
-    expect(generationService.generate).not.toHaveBeenCalledWith(templates[1], expect.any(Number));
+    expect(generationService.generate).toHaveBeenCalledWith(templates[0], expect.any(Number), input);
+    expect(generationService.generate).not.toHaveBeenCalledWith(templates[1], expect.any(Number), input);
   });
 });

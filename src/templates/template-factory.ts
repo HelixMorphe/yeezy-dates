@@ -6,6 +6,7 @@ import {
   WEEKDAYS,
 } from '../constants';
 import { Template } from '../types';
+import { DynamicNumberPattern } from './dynamic-number-pattern';
 import { RelativeDayTemplate } from './relative-day-template';
 import { RelativeDayWithTimeTemplate } from './relative-day-with-time-template';
 import { RelativeTimeTemplate } from './relative-time-template';
@@ -17,10 +18,7 @@ export class TemplateFactory {
     return new RelativeTimeTemplate(
       ['{number}', '{unit}', '{direction}'],
       [
-        new SimplePattern(
-          'number',
-          Array.from({ length: 60 }, (_, i) => i + 1),
-        ),
+        new DynamicNumberPattern(),
         new SimplePattern('unit', TIME_UNITS),
         new SimplePattern('direction', ['from now', 'ago']),
       ],
