@@ -27,6 +27,10 @@ function createDefaultSuggestionService(): TemplateSuggestionService {
   repository.add('relative-weekday-template', TemplateFactory.createRelativeWeekdayTemplate())
   repository.add('relative-day-template', TemplateFactory.createRelativeDayTemplate());
   repository.add('relative-day-with-time-template', TemplateFactory.createRelativeDayWithTimeTemplate())
+  repository.add('relative-week-template', TemplateFactory.createRelativeWeekTemplate())
+  repository.add('relative-month-template', TemplateFactory.createRelativeMonthTemplate())
+  repository.add('relative-year-template', TemplateFactory.createRelativeYearTemplate())
+  repository.add('relative-weekend-template', TemplateFactory.createRelativeWeekendTemplate())
 
   return new TemplateSuggestionService(repository, generationService, filterService);
 }
